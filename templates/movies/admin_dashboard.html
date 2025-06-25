@@ -1,0 +1,99 @@
+{% extends 'users/basic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <h2 class="mb-4"><i class="fas fa-bullseye text-primary me-2"></i>Admin Dashboard</h2>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card text-white bg-success mb-3">
+        <div class="card-body">
+          <h5 class="card-title">💰 Total Revenue</h5>
+          <p class="card-text fs-4">₹{{ total_revenue }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card text-white bg-info mb-3">
+        <div class="card-body">
+          <h5 class="card-title">🎟 Total Bookings</h5>
+          <p class="card-text fs-4">{{ total_bookings }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4 class="mt-5 mb-3">🎬 Top 5 Most Popular Movies</h4>
+  <ul class="list-group mb-5">
+    {% for movie in top_movies %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ movie.movie_name }}
+        <span class="badge bg-primary rounded-pill">{{ movie.bookings }} bookings</span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h4 class="mb-3">🏢 Top 5 Busiest Theaters</h4>
+  <ul class="list-group">
+    {% for item in top_theaters %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ item.theater_name }} ({{ item.movie_name }})
+        <span class="badge bg-success rounded-pill">{{ item.bookings }} bookings</span>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<!-- FontAwesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+{% endblock %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { color: #444; }
+        .section { margin-bottom: 30px; }
+        .badge { padding: 5px 10px; border-radius: 5px; color: white; font-size: 14px; }
+        .blue { background-color: #007bff; }
+        .green { background-color: #28a745; }
+    </style>
+</head>
+<body>
+    <h2>🎯 Admin Dashboard</h2>
+
+    <div class="section">
+        <h3>Total Revenue</h3>
+        <p>₹{{ total_revenue }}</p>
+    </div>
+
+    <div class="section">
+        <h3>Top 5 Most Popular Movies</h3>
+        <ul>
+            {% for movie in popular_movies %}
+                <li>
+                    {{ movie.show__movie__name }} 
+                    <span class="badge blue">{{ movie.bookings }} bookings</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h3>Top 5 Busiest Theaters</h3>
+        <ul>
+            {% for theater in busiest_theaters %}
+                <li>
+                    {{ theater.show__theater__name }} ({{ theater.show__movie__name }})
+                    <span class="badge green">{{ theater.bookings }} bookings</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
